@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRUD Interfaz</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#f4f6f9;
+      padding:40px;
+    }
+
+    .container{
+      max-width:1000px;
+      margin:auto;
+      background:white;
+      padding:30px;
+      border-radius:12px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h1{
+      text-align:center;
+      margin-bottom:30px;
+      color:#333;
+    }
+
+    .formulario{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:15px;
+      margin-bottom:30px;
+    }
+
+    .formulario input{
+      padding:12px;
+      border:1px solid #ccc;
+      border-radius:8px;
+      outline:none;
+      transition:0.3s;
+    }
+
+    .formulario input:focus{
+      border-color:#007bff;
+    }
+
+    .botones{
+      grid-column:span 2;
+      display:flex;
+      gap:10px;
+      justify-content:center;
+    }
+
+    button{
+      padding:12px 20px;
+      border:none;
+      border-radius:8px;
+      cursor:pointer;
+      color:white;
+      font-weight:bold;
+      transition:0.3s;
+    }
+
+    .btn-guardar{
+      background:#28a745;
+    }
+
+    .btn-editar{
+      background:#ffc107;
+      color:black;
+    }
+
+    .btn-eliminar{
+      background:#dc3545;
+    }
+
+    button:hover{
+      opacity:0.8;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+    }
+
+    table thead{
+      background:#007bff;
+      color:white;
+    }
+
+    table th,
+    table td{
+      padding:15px;
+      text-align:center;
+      border-bottom:1px solid #ddd;
+    }
+
+    .acciones button{
+      margin:0 5px;
+    }
+
+    @media(max-width:768px){
+
+      .formulario{
+        grid-template-columns:1fr;
+      }
+
+      .botones{
+        grid-column:span 1;
+        flex-direction:column;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>CRUD DE USUARIOS</h1>
+
+    <form class="formulario" id="formulario">
+
+      <input type="text" id="nombre" placeholder="Nombre">
+      <input type="email" id="correo" placeholder="Correo">
+
+      <div class="botones">
+        <button type="submit" class="btn-guardar">
+          Guardar
+        </button>
+      </div>
+
+    </form>
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody id="tablaUsuarios">
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <script>
+
+    let usuarios = [];
+    let editando = false;
+    let idEditar = null;
+
+    const formulario = document.getElementById("formulario");
+    const tablaUsuarios = document.getElementById("tablaUsuarios");
+
+    formulario.addEventListener("submit", function(e){
+
+      e.preventDefault();
+
+      const nombre = document.getElementById("nombre").value;
+      const correo = document.getElementById("correo").value;
+
+      if(nombre === "" || correo === ""){
+        alert("Completa todos los campos");
+        return;
+      }
+
+      if(editando){
+
+        usuarios = usuarios.map(usuario => {
+
+          if(usuario.id === idEditar){
+            return {
+              id:idEditar,
+              nombre,
+              correo
+            }
+          }
+
+          return usuario;
+
+        });
+
+        editando = false;
+        idEditar = null;
+
+      }else{
+
+        const nuevoUsuario = {
+          id: Date.now(),
+          nombre,
+          correo
+        };
+
+        usuarios.push(nuevoUsuario);
+
+      }
+
+      formulario.reset();
+
+      mostrarUsuarios();
+
+    });
+
+    function mostrarUsuarios(){
+
+      tablaUsuarios.innerHTML = "";
+
+      usuarios.forEach(usuario => {
+
+        tablaUsuarios.innerHTML += `
+          <tr>
+            <td>${usuario.id}</td>
+            <td>${usuario.nombre}</td>
+            <td>${usuario.correo}</td>
+
+            <td class="acciones">
+
+              <button class="btn-editar"
+                onclick="editarUsuario(${usuario.id})">
+                Editar
+              </button>
+
+              <button class="btn-eliminar"
+                onclick="eliminarUsuario(${usuario.id})">
+                Eliminar
+              </button>
+
+            </td>
+
+          </tr>
+        `;
+
+      });
+
+    }
+
+    function eliminarUsuario(id){
+
+      usuarios = usuarios.filter(usuario => usuario.id !== id);
+
+      mostrarUsuarios();
+
+    }
+
+    function editarUsuario(id){
+
+      const usuario = usuarios.find(usuario => usuario.id === id);
+
+      document.getElementById("nombre").value = usuario.nombre;
+      document.getElementById("correo").value = usuario.correo;
+
+      editando = true;
+      idEditar = id;
+
+    }
+
+  </script>
+
+</body>
+</html>
