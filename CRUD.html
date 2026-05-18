@@ -69,9 +69,33 @@
       transition:0.3s;
     }
 
-    .btn-guardar{
-      background:#28a745;
-    }
+    .btn-guardar {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.btn-guardar:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+.btn-guardar:active {
+    transform: scale(0.98);
+}
+
+.btn-guardar:disabled {
+    background-color: #94d3a2;
+    cursor: not-allowed;
+    box-shadow: none;
+}
 
     .btn-editar{
       background:#ffc107;
