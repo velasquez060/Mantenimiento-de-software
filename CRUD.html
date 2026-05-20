@@ -173,7 +173,9 @@
           <th>ID</th>
           <th>Nombre</th>
           <th>Correo</th>
-          <th>Acciones</th>
+          <th>Fecha creación</th>
+          <th>Acción 1</th>
+          <th>Acción 2</th>
         </tr>
       </thead>
 
@@ -190,6 +192,7 @@
     let usuarios = [];
     let editando = false;
     let idEditar = null;
+    let idUsuarioConsecutivo = 1
 
     const formulario = document.getElementById("formulario");
     const tablaUsuarios = document.getElementById("tablaUsuarios");
@@ -225,13 +228,16 @@
         editando = false;
         idEditar = null;
 
-      }else{
-
+      } else {
+        
         const nuevoUsuario = {
-          id: Date.now(),
+          id: idUsuarioConsecutivo,
           nombre,
-          correo
+          correo,
+          fechaCreacion: new Date().toLocaleString()
         };
+
+        idUsuarioConsecutivo++;
 
         usuarios.push(nuevoUsuario);
 
@@ -254,6 +260,7 @@
             <td>${usuario.id}</td>
             <td>${usuario.nombre}</td>
             <td>${usuario.correo}</td>
+            <td>${usuario.fechaCreacion}</td>
 
             <td class="acciones">
               <button class="btn-editar"
