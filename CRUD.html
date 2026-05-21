@@ -6,6 +6,7 @@
   <title>CRUD Interfaz</title>
 
   <style>
+
     *{
       margin:0;
       padding:0;
@@ -16,6 +17,37 @@
     body{
       background:#a2c5f3;
       padding:40px;
+    }
+
+    header{
+      background:#007bff;
+      color:white;
+      padding:20px;
+      border-radius:12px;
+      margin-bottom:20px;
+    }
+
+    header h2{
+      text-align:center;
+      margin-bottom:15px;
+    }
+
+    nav{
+      display:flex;
+      justify-content:center;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    nav a{
+      color:white;
+      text-decoration:none;
+      font-weight:bold;
+      transition:0.3s;
+    }
+
+    nav a:hover{
+      color:#d1ecf1;
     }
 
     .container{
@@ -69,33 +101,33 @@
       transition:0.3s;
     }
 
-    .btn-guardar {
-    background-color: #008000;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-}
+    .btn-guardar{
+      background-color:#008000;
+      color:white;
+      border:none;
+      padding:12px 24px;
+      font-size:16px;
+      font-weight:bold;
+      border-radius:8px;
+      cursor:pointer;
+      box-shadow:0px 4px 6px rgba(0, 0, 0, 0.2);
+      transition:all 0.3s ease;
+    }
 
-.btn-guardar:hover {
-    background-color: #218838;
-    transform: translateY(-2px);
-}
+    .btn-guardar:hover{
+      background-color:#218838;
+      transform:translateY(-2px);
+    }
 
-.btn-guardar:active {
-    transform: scale(0.98);
-}
+    .btn-guardar:active{
+      transform:scale(0.98);
+    }
 
-.btn-guardar:disabled {
-    background-color: #94d3a2;
-    cursor: not-allowed;
-    box-shadow: none;
-}
+    .btn-guardar:disabled{
+      background-color:#94d3a2;
+      cursor:not-allowed;
+      box-shadow:none;
+    }
 
     .btn-editar{
       background:#ffc107;
@@ -109,9 +141,11 @@
     button:hover{
       opacity:0.8;
     }
+
     table tbody tr:hover{
       background:#d1ecf1;
     }
+
     table{
       width:100%;
       border-collapse:collapse;
@@ -144,12 +178,30 @@
         flex-direction:column;
       }
 
+      nav{
+        flex-direction:column;
+        align-items:center;
+      }
+
     }
 
   </style>
 </head>
 
 <body>
+
+  <header>
+
+    <h2>Sistema CRUD</h2>
+
+    <nav>
+      <a href="#">Inicio</a>
+      <a href="#">Usuarios</a>
+      <a href="#">Registros</a>
+      <a href="#">Contacto</a>
+    </nav>
+
+  </header>
 
   <div class="container">
 
@@ -194,7 +246,7 @@
     let usuarios = [];
     let editando = false;
     let idEditar = null;
-    let idUsuarioConsecutivo = 1
+    let idUsuarioConsecutivo = 1;
 
     const formulario = document.getElementById("formulario");
     const tablaUsuarios = document.getElementById("tablaUsuarios");
@@ -231,7 +283,7 @@
         idEditar = null;
 
       } else {
-        
+
         const nuevoUsuario = {
           id: idUsuarioConsecutivo,
           nombre,
@@ -270,6 +322,7 @@
                 Editar
               </button>
             </td>
+
             <td class="acciones">
               <button class="btn-eliminar"
                 onclick="eliminarUsuario(${usuario.id})">
